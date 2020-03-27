@@ -1,30 +1,8 @@
-
-# This version also stores configurations during searching for longest suffix
-
-# def max_suffix(string1, string2, configs, i, j):
-#     """
-#
-#     :param string1: M
-#     :param string2: A
-#     :param configs: dictionary <(i,j), length of longest suffix so far>
-#     :param i: initially length of string1
-#     :param j: initially length of string2
-#     :return: max length of suffix
-#     """
-#     if i < 0 or j < 0:
-#         return 0
-#     suffix_len = 0
-#     if string1[i] == string2[j]:
-#         configs[i, j] += 1
-#         suffix_len = 1 + max_suffix(string1, string2, configs, i - 1, j - 1)
-#     return max(suffix_len, max_suffix(string1, string2, configs, i - 1, j))
-
-
 def max_suffix(string1, string2, i, j):
     """
-
-    :param string1: M
-    :param string2: A
+    Function returns the maximum length of suffix of string2 in string1 as subsequence
+    :param string1:
+    :param string2:
     :param i: initially length of string1
     :param j: initially length of string2
     :return: max length of suffix
@@ -37,12 +15,12 @@ def max_suffix(string1, string2, i, j):
     return max(suffix_len, max_suffix(string1, string2, i - 1, j))
 
 
-# def init_configs(length1, length2):
-#     configs = dict()
-#     for i in range(length1):
-#         for j in range(length2):
-#             configs[i, j] = 0
-#     return configs
+def build_table(string1, string2):
+    table = dict()
+    for i in range(len(string1)):
+        for j in range(len(string2)):
+            table[i, j] = 0
+    return table
 
 
 def get_solution(substring, max_suffix_len):
@@ -50,6 +28,14 @@ def get_solution(substring, max_suffix_len):
 
 
 def max_non_supersequence(string1, string2, table):
+    """
+    Function finds length of the longest subsequence in string1 which is not supersequence of string2
+    :param string1:
+    :param string2:
+    :param table: a dictionary data structure to memorize the configurations
+    :return:
+    """
+
     for i in range(1, len(string1)):
         for j in range(1, len(string2)):
             if string1[i] != string2[j]:
@@ -64,13 +50,6 @@ def min_deletion(string1, string2, table):
         return len(string1)
     return len(string1) - max_non_supersequence(string1, string2, table)
 
-
-def build_table(string1, string2):
-    table = dict()
-    for i in range(len(string1)):
-        for j in range(len(string2)):
-            table[i, j] = 0
-    return table
 
 ########################################
 ######## Tests #########################
