@@ -1,3 +1,4 @@
+
 def max_suffix(string1, string2, i, j):
     """
     Function returns the maximum length of suffix of string2 in string1 as subsequence
@@ -9,16 +10,18 @@ def max_suffix(string1, string2, i, j):
     """
     if i < 0 or j < 0:
         return 0
-    suffix_len = 0
+
     if string1[i] == string2[j]:
-        suffix_len = 1 + max_suffix(string1, string2, i - 1, j - 1)
-    return max(suffix_len, max_suffix(string1, string2, i - 1, j))
+        return 1 + max_suffix(string1, string2, i - 1, j - 1)
+    return max_suffix(string1, string2, i - 1, j)
 
 
+# print("")
+# exit()
 def build_table(string1, string2):
     table = dict()
-    for i in range(len(string1)):
-        for j in range(len(string2)):
+    for i in range(-1, len(string1)):
+        for j in range(-1, len(string2)):
             table[i, j] = 0
     return table
 
@@ -36,12 +39,14 @@ def max_non_supersequence(string1, string2, table):
     :return:
     """
 
-    for i in range(1, len(string1)):
-        for j in range(1, len(string2)):
+    for i in range(0, len(string1)):
+        for j in range(0, len(string2)):
             if string1[i] != string2[j]:
                 table[i, j] = max(table[i-1, j-1], table[i-1, j], table[i, j-1]) + 1
             else:
                 table[i, j] = max(table[i - 1, j - 1], table[i - 1, j], table[i, j - 1])
+            print(table[i, j], end=' ')
+        print()
     return table[len(string1)-1, len(string2)-1]
 
 
@@ -79,6 +84,11 @@ def test_longest_suffix():
     res3 = max_suffix(string1, string4, len(string1) - 1, len(string4) - 1)
     print(res3)
     print(get_solution(string4, res3))
+
+    string5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    res4 = max_suffix(string5, string5, len(string5) - 1, len(string5) - 1)
+    print(res4)
+    print(get_solution(string5, res4))
 
 
 def test_max_non_supersequence():
