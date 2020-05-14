@@ -1,0 +1,1 @@
+upravit implementaci Ford Fulkerson a pridat unit testy
